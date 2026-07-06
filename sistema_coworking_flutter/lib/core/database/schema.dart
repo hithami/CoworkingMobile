@@ -39,7 +39,7 @@ const String createTriggerSalaInsert = '''
   AFTER INSERT ON sala
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('sala', 'INSERT');
   END; 
 '''; 
@@ -49,7 +49,7 @@ const String createTriggerSalaUpdate = '''
   AFTER UPDATE ON sala
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('sala', 'UPDATE');
   END; 
 ''';
@@ -59,7 +59,7 @@ const String createTriggerSalaDelete = '''
   AFTER DELETE ON sala
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('sala', 'DELETE');
   END;  
 '''; 
@@ -71,7 +71,7 @@ const String createTriggerAgendamentoInsert = '''
   AFTER INSERT ON agendamento
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('agendamento', 'INSERT');
   END; 
 '''; 
@@ -81,7 +81,7 @@ const String createTriggerAgendamentoUpdate = '''
   AFTER UPDATE ON agendamento
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('agendamento', 'UPDATE');
   END; 
 '''; 
@@ -91,7 +91,7 @@ const String createTriggerAgendamentoDelete = '''
   AFTER DELETE ON agendamento
   FOR EACH ROW
   BEGIN
-    INSERT INTO log_operacao (nome_tabela, tipo_operacao, data_hora_operacao)
+    INSERT INTO log_operacao (nome_tabela, tipo_operacao)
     VALUES ('agendamento', 'DELETE');
   END; 
 '''; 
