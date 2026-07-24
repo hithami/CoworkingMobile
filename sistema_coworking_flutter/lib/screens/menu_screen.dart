@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
+import 'sala_screen.dart';
 
 class MenuScreen extends StatelessWidget {
 
@@ -9,12 +10,23 @@ class MenuScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, //alinhando itens da coluna no centro
           children: [ 
-            Text('Sistema Coworking'), 
+            Text('Sistema Coworking', 
+            style: TextStyle( 
+              fontSize: 27
+              ), 
+            ), 
 
             SizedBox(height: 30),
              
             ElevatedButton(  
-              onPressed: () {}, 
+              onPressed: () { 
+                //abrir tela salas 
+                Navigator.push( 
+                  context, 
+                  MaterialPageRoute(builder: (context) => SalaScreen() 
+                  ),
+                );
+              }, 
               child: Text('Salas'),  
             ), 
 
