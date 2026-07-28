@@ -67,11 +67,18 @@ class _SalaScreenState extends State<SalaScreen> {
                   nomeSala: _nomeSalaController.text
                 );  
                  
-                await _salaRepository.inserirSala(novaSala);
+                await _salaRepository.inserirSala(novaSala); 
+                 
+                ScaffoldMessenger.of(context).showSnackBar( 
+                  SnackBar( 
+                    content: Text('Sala cadastrada com sucesso!') 
+                  ) 
+                );
                  
                 _nomeSalaController.clear(); 
                  
               }, 
+               
               child: Text( 
                 'Criar Sala'
               ),
