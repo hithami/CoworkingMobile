@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart'; 
+import '../models/sala.dart'; 
+import '../repositories/sala_repositoy.dart';
+ 
  
 class SalaScreen extends StatefulWidget { 
    
@@ -9,15 +12,73 @@ class SalaScreen extends StatefulWidget {
 } 
  
 class _SalaScreenState extends State<SalaScreen> { 
-  
+   
+  final TextEditingController _nomeSalaController = TextEditingController(); 
+  final SalaRepository _salaRepository = SalaRepository(); 
+
   @override  
   Widget build(BuildContext context) { 
     return Scaffold( 
-      body: Column( 
-        children: [ 
-          Text('Salas')
-        ],
-      ) 
+
+      appBar: AppBar( 
+        centerTitle: true,
+        title: Text('Salas', 
+        style: TextStyle( 
+          fontSize: 23, 
+          ), 
+        ),
+      ), 
+
+      body: Padding( 
+        padding: EdgeInsets.all(50), 
+        child: Column( 
+          children: [ 
+             
+            Text( 
+              'Nome da Sala', 
+              style: TextStyle( 
+                fontWeight: FontWeight.bold, 
+                fontSize: 23,
+              ),
+            ), 
+
+            SizedBox( 
+              height: 20,
+            ), 
+             
+            TextField( 
+              controller: _nomeSalaController, 
+              decoration: InputDecoration( 
+                hintText: 'Digite o nome da nova sala', 
+                border: OutlineInputBorder( 
+                  borderRadius: BorderRadius.circular(50)
+                ),
+              ),
+            ), 
+             
+            SizedBox( 
+              height: 20,
+            ), 
+             
+            ElevatedButton( 
+              onPressed: () async {
+                 
+                Sala novaSala = Sala( 
+                  nomeSala: _nomeSalaController.text
+                );  
+                 
+                await _salaRepository.inserirSala(novaSala);
+                 
+                _nomeSalaController.clear(); 
+                 
+              }, 
+              child: Text( 
+                'Criar Sala'
+              ),
+            ),
+          ],
+        ),
+      ), 
 
     );
   }
