@@ -98,8 +98,7 @@ class _SalaScreenState extends State<SalaScreen> {
                     );
                   }
                 }
-                
-                 
+    
             }, 
                
               child: Text( 

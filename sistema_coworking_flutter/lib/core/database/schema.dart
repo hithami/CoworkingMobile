@@ -4,7 +4,7 @@
 const String createTableSala = ''' 
   CREATE TABLE sala (
     id_sala INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome_sala TEXT NOT NULL UNIQUE
+    nome_sala TEXT NOT NULL UNIQUE CHECK (LENGTH(nome_sala) > 0)
 ); 
 ''';  
 
