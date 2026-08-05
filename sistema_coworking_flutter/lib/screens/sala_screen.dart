@@ -15,6 +15,7 @@ class _SalaScreenState extends State<SalaScreen> {
    
   final TextEditingController _nomeSalaController = TextEditingController(); 
   final SalaRepository _salaRepository = SalaRepository(); 
+  List<Sala> _salas = []; 
 
   @override  
   Widget build(BuildContext context) { 
@@ -104,7 +105,9 @@ class _SalaScreenState extends State<SalaScreen> {
               child: Text( 
                 'Criar Sala'
               ),
-            ),
+            ), 
+             
+            
           ],
         ),
       ), 
