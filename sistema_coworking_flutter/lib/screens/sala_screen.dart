@@ -74,7 +74,7 @@ class _SalaScreenState extends State<SalaScreen> {
                  
                   await _salaRepository.inserirSala(novaSala); 
 
-                  if (!mounted) return; 
+                  if (!context.mounted) return; 
                  
                   ScaffoldMessenger.of(context).showSnackBar( 
                     SnackBar(content: Text( 
@@ -87,7 +87,7 @@ class _SalaScreenState extends State<SalaScreen> {
                 } 
                 catch (erro) { 
 
-                  if (!mounted) return; 
+                  if (!context.mounted) return; 
 
                   if(erro.toString().contains("UNIQUE")) { 
 
