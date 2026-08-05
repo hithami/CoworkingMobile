@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'; 
 import '../models/sala.dart'; 
-import '../repositories/sala_repositoy.dart';
+import '../repositories/sala_repository.dart';
  
  
 class SalaScreen extends StatefulWidget { 
@@ -71,6 +71,8 @@ class _SalaScreenState extends State<SalaScreen> {
                   );  
                  
                   await _salaRepository.inserirSala(novaSala); 
+
+                  if (!mounted) return; 
                  
                   ScaffoldMessenger.of(context).showSnackBar( 
                     SnackBar(content: Text( 
@@ -82,6 +84,9 @@ class _SalaScreenState extends State<SalaScreen> {
 
                 } 
                 catch (erro) { 
+
+                  if (!mounted) return; 
+
                   if(erro.toString().contains("UNIQUE")) { 
 
                     ScaffoldMessenger.of(context).showSnackBar( 
