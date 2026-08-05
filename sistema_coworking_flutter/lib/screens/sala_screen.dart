@@ -3,7 +3,9 @@ import '../models/sala.dart';
 import '../repositories/sala_repository.dart';
  
  
-class SalaScreen extends StatefulWidget { 
+class SalaScreen extends StatefulWidget {  
+   
+  const SalaScreen({super.key});
    
   @override 
   State<SalaScreen> createState() { 
