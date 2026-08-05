@@ -40,21 +40,31 @@ class DatabaseHelper {
       },
       onCreate: (db, version) async { 
          
-        await db.execute(createTableSala); 
-        await db.execute(createTableAgendamento); 
-        await db.execute(createTableLog); 
+        final tabelas = [ 
+          createTableSala, 
+          createTableAgendamento, 
+          createTableLog,
+        ]; 
          
-        await db.execute(createTriggerSalaInsert); 
-        await db.execute(createTriggerSalaUpdate); 
-        await db.execute(createTriggerSalaDelete); 
+        final triggers = [ 
+          createTriggerSalaInsert, 
+          createTriggerSalaUpdate, 
+          createTriggerSalaDelete, 
+          createTriggerAgendamentoInsert, 
+          createTriggerAgendamentoUpdate, 
+          createTriggerAgendamentoDelete, 
+          createTriggerBloqueioDeletarSala, 
+          createTriggerBloqueioSobreposicaoAgendamento, 
+          createTriggerBloqueioSobreposicaoAgendamentoUpdate,
+        ]; 
          
-        await db.execute(createTriggerAgendamentoInsert); 
-        await db.execute(createTriggerAgendamentoUpdate); 
-        await db.execute(createTriggerAgendamentoDelete); 
+        for (final tabela in tabelas) { 
+          await db.execute(tabela);
+        } 
          
-        await db.execute(createTriggerBloqueioDeletarSala); 
-        await db.execute(createTriggerBloqueioSobreposicaoAgendamento); 
-        await db.execute(createTriggerBloqueioSobreposicaoAgendamentoUpdate);
+        for (final trigger in triggers) { 
+          await db.execute(trigger);
+        }
       },
     );
   }
