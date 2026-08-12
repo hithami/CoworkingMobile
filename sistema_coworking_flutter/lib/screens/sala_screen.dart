@@ -18,13 +18,26 @@ class _SalaScreenState extends State<SalaScreen> {
   final TextEditingController _nomeSalaController = TextEditingController(); 
 
   final SalaRepository _salaRepository = SalaRepository(); 
+
+  List<Sala> _salas = [];   
    
-  List<Sala> _salas = [];  
+  @override  
+  void initState(){ 
+    super.initState(); 
+    _carregarSalas();
+  }
    
   @override  
   void dispose(){ 
     _nomeSalaController.dispose(); 
     super.dispose();
+  } 
+   
+  Future<void> _carregarSalas() async { 
+    final salas = await _salaRepository.listarSalas(); 
+    setState(() {
+      _salas = salas;
+    });
   }
 
   @override  
