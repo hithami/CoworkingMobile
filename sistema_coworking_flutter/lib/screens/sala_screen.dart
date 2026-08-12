@@ -135,7 +135,21 @@ class _SalaScreenState extends State<SalaScreen> {
               ),
             ), 
              
-            
+            SizedBox( 
+              height: 50,
+            ), 
+
+            Expanded( 
+              child: ListView.builder( 
+                itemCount: _salas.length, 
+                itemBuilder: (context, index) { 
+                  final sala = _salas[index]; 
+                  return ListTile( 
+                    title: Text(sala.nomeSala),
+                  );
+                }, 
+              ), 
+            ),
           ],
         ),
       ), 
