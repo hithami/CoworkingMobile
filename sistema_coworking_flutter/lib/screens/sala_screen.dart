@@ -16,8 +16,16 @@ class SalaScreen extends StatefulWidget {
 class _SalaScreenState extends State<SalaScreen> { 
    
   final TextEditingController _nomeSalaController = TextEditingController(); 
+
   final SalaRepository _salaRepository = SalaRepository(); 
-  List<Sala> _salas = []; 
+   
+  List<Sala> _salas = [];  
+   
+  @override  
+  void dispose(){ 
+    _nomeSalaController.dispose(); 
+    super.dispose();
+  }
 
   @override  
   Widget build(BuildContext context) { 
