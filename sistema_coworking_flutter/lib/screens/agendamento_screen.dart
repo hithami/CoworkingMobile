@@ -38,10 +38,29 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
         title: Text('Agendamentos', style: TextStyle(fontSize: 23)),
       ),
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(40),
         child: Column(
-          children: [
-            // conteúdo vem nas próximas partes
+          children: [ 
+            
+            DropdownButton<Sala>(
+              hint: Text(
+                'Selecione a sala',
+                style: TextStyle(fontSize: 20),
+              ),
+              value: _salaSelecionada,
+              isExpanded: true,
+              items: _salas.map((sala) {
+                return DropdownMenuItem(
+                  value: sala,
+                  child: Text(sala.nomeSala),
+                );
+              }).toList(),
+              onChanged: (sala) {
+                setState(() {
+                  _salaSelecionada = sala;
+                });
+              },
+            ),
           ],
         ),
       ),
