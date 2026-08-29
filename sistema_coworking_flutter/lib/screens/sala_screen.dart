@@ -92,17 +92,18 @@ class _SalaScreenState extends State<SalaScreen> {
                   Sala novaSala = Sala( 
                   nomeSala: _nomeSalaController.text
                   );  
-                 
+                
                   await _salaRepository.inserirSala(novaSala); 
+                  await _carregarSalas();
 
                   if (!context.mounted) return; 
-                 
+                
                   ScaffoldMessenger.of(context).showSnackBar( 
                     SnackBar(content: Text( 
                       'Sala cadastrada com sucesso!') 
                     ) 
                   );
-                 
+                
                   _nomeSalaController.clear();  
 
                 } 
@@ -119,7 +120,7 @@ class _SalaScreenState extends State<SalaScreen> {
                     ); 
 
                   } else { 
-                     
+                    
                     ScaffoldMessenger.of(context).showSnackBar( 
                       SnackBar(content: Text( 
                         "Ocorreu um erro ao cadastrar a sala.") 
