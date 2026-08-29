@@ -41,6 +41,17 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
         padding: EdgeInsets.all(40),
         child: Column(
           children: [ 
+             
+            Text(
+              'Salas',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 23,
+              ),
+            ),
+
+            SizedBox(height: 20), 
+             
             
             DropdownButton<Sala>(
               hint: Text(
