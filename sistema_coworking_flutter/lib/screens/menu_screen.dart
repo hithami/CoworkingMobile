@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:sistema_coworking_flutter/screens/agendamento_screen.dart'; 
 import 'sala_screen.dart';
 
 class MenuScreen extends StatelessWidget { 
@@ -35,7 +36,14 @@ class MenuScreen extends StatelessWidget {
             SizedBox(height: 20),
              
             ElevatedButton(  
-              onPressed: () {}, 
+              onPressed: () { 
+                //abrir tela agendamento 
+                Navigator.push( 
+                  context, 
+                  MaterialPageRoute(builder: (context) => AgendamentoScreen()
+                  ), 
+                );
+              }, 
               child: Text('Agendamentos'),
             )
           ],
