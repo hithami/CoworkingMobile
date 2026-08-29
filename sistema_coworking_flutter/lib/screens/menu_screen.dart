@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:sistema_coworking_flutter/screens/agendamento_screen.dart'; 
-import 'sala_screen.dart';
+import 'package:flutter/material.dart'; 
+import 'sala_screen.dart'; 
+import 'agendamento_screen.dart';
 
 class MenuScreen extends StatelessWidget { 
    
