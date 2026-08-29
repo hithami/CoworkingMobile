@@ -145,7 +145,129 @@ class _SalaScreenState extends State<SalaScreen> {
                 itemBuilder: (context, index) { 
                   final sala = _salas[index]; 
                   return ListTile( 
-                    title: Text(sala.nomeSala),
+                    title: Text(sala.nomeSala), 
+                    trailing: Row( 
+                      mainAxisSize: MainAxisSize.min, 
+                      children: [ 
+                        IconButton( 
+                          icon: Icon(Icons.edit), 
+                          onPressed: () { 
+
+                            final editarController = TextEditingController(text: sala.nomeSala);  
+                             
+                            showDialog( 
+                              context: context, 
+                              builder: (context) { 
+                                return AlertDialog( 
+                                  title: Text('Editar Sala'), 
+                                  content: TextField( 
+                                    controller: editarController,
+                                  ), 
+                                  actions: [ 
+           
+                                    TextButton( 
+                                      onPressed: () async { 
+                                        Navigator.pop(context); 
+
+                                        try { 
+
+                                          Sala salaEditada = Sala( 
+                                            idSala: sala.idSala, 
+                                            nomeSala: editarController.text,
+                                          ); 
+                                           
+                                          await _salaRepository.editarSala(salaEditada); 
+                                          await _carregarSalas(); 
+                                           
+                                          if (!context.mounted) return; 
+                                           
+                                          ScaffoldMessenger.of(context).showSnackBar( 
+                                            SnackBar(content: Text("Sala editada com sucesso!")),
+                                          ); 
+
+                                        } 
+                                        catch (erro) { 
+                                           
+                                          if(!context.mounted) return; 
+                                           
+                                          if(erro.toString().contains("UNIQUE")) { 
+                                            ScaffoldMessenger.of(context).showSnackBar( 
+                                              SnackBar(content: Text("Já existe uma sala com esse nome!")),
+                                            );
+                                          } else if (erro.toString().contains("CHECK")) { 
+                                            ScaffoldMessenger.of(context).showSnackBar( 
+                                              SnackBar(content: Text("O nome da sala não pode ser vazio.")),
+                                            );
+                                          } else { 
+                                            ScaffoldMessenger.of(context).showSnackBar( 
+                                              SnackBar(content: Text("Ocorreu um erro ao editar a sala."))
+                                            );
+                                          }
+                                        }
+                                      }, 
+                                      child: Text("Sim"),
+                                    ), 
+                                     
+                                    TextButton( 
+                                      onPressed: () { 
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text('Não'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ), 
+                        IconButton( 
+                          icon: Icon(Icons.delete), 
+                          onPressed: () { 
+                            showDialog( 
+                              context: context, 
+                              builder: (context) { 
+                                return AlertDialog( 
+                                  title: Text('Confirmação'), 
+                                  content: Text('Tem certeza que deseja excluir essa sala?'), 
+                                  actions: [ 
+                                     
+                                    TextButton( 
+                                      onPressed: () async { 
+                                      Navigator.pop(context); 
+
+                                      try {
+                                        await _salaRepository.excluirSala(sala.idSala!); 
+                                        await _carregarSalas(); 
+                                        
+                                        if(!context.mounted) return; 
+                                        
+                                        ScaffoldMessenger.of(context).showSnackBar( 
+                                          SnackBar(content: Text('Sala excluída com sucesso!')),
+                                        );
+                                      } catch (erro) {
+                                        if (!context.mounted) return;
+
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Essa sala possui um agendamento futuro e não pode ser excluída.")),
+                                        );
+                                      }
+                                    }, 
+                                    child: Text('Sim'),
+                                  ), 
+                                    TextButton( 
+                                      onPressed: () { 
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text('Não'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   );
                 }, 
               ), 
