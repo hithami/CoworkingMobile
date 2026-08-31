@@ -15,7 +15,9 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
 
   List<Sala> _salas = [];
 
-  Sala? _salaSelecionada;
+  Sala? _salaSelecionada; 
+   
+  DateTime? _dataInicio;
 
   @override
   void initState() {
@@ -71,6 +73,34 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   _salaSelecionada = sala;
                 });
               },
+            ), 
+             
+            SizedBox(height: 40),
+
+            ElevatedButton(
+              onPressed: () async {
+
+                final data = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2026),
+                  lastDate: DateTime(2030),
+                ); 
+
+                if (data == null) return;
+                if (!context.mounted) return;
+
+                final hora = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                if (hora == null) return;
+
+                setState(() {
+                  _dataInicio = DateTime(data.year, data.month, data.day, hora.hour, hora.minute);
+                });
+              },
+              child: Text(_dataInicio == null ? 'Selecionar início' : 'Início: $_dataInicio'),
             ),
           ],
         ),
