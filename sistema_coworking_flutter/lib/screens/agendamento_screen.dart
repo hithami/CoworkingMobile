@@ -17,7 +17,9 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
 
   Sala? _salaSelecionada; 
    
-  DateTime? _dataInicio;
+  DateTime? _dataInicio; 
+   
+  DateTime? _dataFim;
 
   @override
   void initState() {
@@ -51,7 +53,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 fontSize: 23,
               ),
             ),
-
+             
+            
             SizedBox(height: 20), 
              
             
@@ -77,7 +80,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
              
             SizedBox(height: 40),
 
-            ElevatedButton(
+            ElevatedButton( 
+              
               onPressed: () async {
 
                 final data = await showDatePicker(
@@ -100,7 +104,36 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   _dataInicio = DateTime(data.year, data.month, data.day, hora.hour, hora.minute);
                 });
               },
-              child: Text(_dataInicio == null ? 'Selecionar início' : 'Início: $_dataInicio'),
+              child: Text(_dataInicio == null ? 'Selecionar início' : 'Início: $_dataInicio'), 
+            ), 
+             
+            SizedBox(height: 10), 
+             
+            ElevatedButton( 
+
+              onPressed: () async {
+
+                final data = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2026),
+                  lastDate: DateTime(2030),
+                );
+                if (data == null) return;
+
+                if (!context.mounted) return;
+
+                final hora = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                if (hora == null) return;
+
+                setState(() {
+                  _dataFim = DateTime(data.year, data.month, data.day, hora.hour, hora.minute);
+                });
+              },
+              child: Text(_dataFim == null ? 'Selecionar fim' : 'Fim: $_dataFim'),
             ),
           ],
         ),
