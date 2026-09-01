@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart'; 
 import '../models/sala.dart';
-import '../repositories/sala_repository.dart';
+import '../repositories/sala_repository.dart'; 
+import '../models/agendamento.dart';
+import '../repositories/agendamento_repository.dart';
 
 class AgendamentoScreen extends StatefulWidget {
   const AgendamentoScreen({super.key});
@@ -11,9 +13,13 @@ class AgendamentoScreen extends StatefulWidget {
 
 class _AgendamentoScreenState extends State<AgendamentoScreen> {
    
-  final SalaRepository _salaRepository = SalaRepository();
+  final SalaRepository _salaRepository = SalaRepository(); 
 
-  List<Sala> _salas = [];
+  List<Sala> _salas = []; 
+   
+  final AgendamentoRepository _agendamentoRepository = AgendamentoRepository();
+
+  List<Agendamento> _agendamentos = [];
 
   Sala? _salaSelecionada; 
    
@@ -24,7 +30,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
   @override
   void initState() {
     super.initState();
-    _carregarSalas();
+    _carregarSalas(); 
+    _carregarAgendamentos();
   }
 
   Future<void> _carregarSalas() async {
@@ -34,9 +41,21 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     });
   } 
 
+  Future<void> _carregarAgendamentos() async {
+    final agendamentos = await _agendamentoRepository.listarAgendamento();
+    setState(() {
+      _agendamentos = agendamentos;
+    });
+  } 
+
   String _formatarDataExibicao(DateTime data) {
     String dois(int numero) => numero.toString().padLeft(2, '0');
     return '${dois(data.day)}/${dois(data.month)}/${data.year} ${dois(data.hour)}:${dois(data.minute)}';
+  } 
+
+  String _formatarDataBanco(DateTime data) {
+    String dois(int numero) => numero.toString().padLeft(2, '0');
+    return '${data.year}-${dois(data.month)}-${dois(data.day)} ${dois(data.hour)}:${dois(data.minute)}:00';
   } 
 
   @override
@@ -139,6 +158,57 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 });
               },
               child: Text(_dataFim == null ? 'Selecionar fim' : 'Fim: ${_formatarDataExibicao(_dataFim!)}'),
+            ), 
+             
+            SizedBox(height: 20), 
+             
+            ElevatedButton(
+              onPressed: () async {
+
+                if (_salaSelecionada == null || _dataInicio == null || _dataFim == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Selecione a sala e as datas.')),
+                  );
+                  return;
+                }
+
+                try {
+
+                  Agendamento novoAgendamento = Agendamento(
+                    idSala: _salaSelecionada!.idSala!,
+                    dataHoraInicio: _formatarDataBanco(_dataInicio!),
+                    dataHoraFim: _formatarDataBanco(_dataFim!),
+                  );
+
+                  await _agendamentoRepository.inserirAgendamento(novoAgendamento);
+                  await _carregarAgendamentos();
+
+                  if (!context.mounted) return;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Agendamento criado com sucesso!')),
+                  );
+
+                } catch (erro) {
+
+                  if (!context.mounted) return;
+
+                  if (erro.toString().contains('CHECK')) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('A data de fim deve ser maior que a de início.')),
+                    );
+                  } else if (erro.toString().contains('ocupada')) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Essa sala já está ocupada nesse horário.')),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Erro ao criar agendamento.')),
+                    );
+                  }
+                }
+              },
+              child: Text('Criar Agendamento'),
             ),
           ],
         ),
