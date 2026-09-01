@@ -34,6 +34,11 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
     });
   } 
 
+  String _formatarDataExibicao(DateTime data) {
+    String dois(int numero) => numero.toString().padLeft(2, '0');
+    return '${dois(data.day)}/${dois(data.month)}/${data.year} ${dois(data.hour)}:${dois(data.minute)}';
+  } 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +86,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
             SizedBox(height: 40),
 
             ElevatedButton( 
-              
+
               onPressed: () async {
 
                 final data = await showDatePicker(
@@ -104,7 +109,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   _dataInicio = DateTime(data.year, data.month, data.day, hora.hour, hora.minute);
                 });
               },
-              child: Text(_dataInicio == null ? 'Selecionar início' : 'Início: $_dataInicio'), 
+              child: Text(_dataInicio == null ? 'Selecionar início' : 'Início: ${_formatarDataExibicao(_dataInicio!)}'),
             ), 
              
             SizedBox(height: 10), 
@@ -133,7 +138,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   _dataFim = DateTime(data.year, data.month, data.day, hora.hour, hora.minute);
                 });
               },
-              child: Text(_dataFim == null ? 'Selecionar fim' : 'Fim: $_dataFim'),
+              child: Text(_dataFim == null ? 'Selecionar fim' : 'Fim: ${_formatarDataExibicao(_dataFim!)}'),
             ),
           ],
         ),
