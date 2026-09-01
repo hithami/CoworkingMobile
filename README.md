@@ -106,7 +106,7 @@ flutter run
 | `bloqueio_sobreposicao_agendamento` | Impede sobreposição de agendamentos na mesma sala ao criar |
 | `bloqueio_sobreposicao_agendamento_update` | Impede sobreposição de agendamentos na mesma sala ao editar |
 
-O script completo de criação do banco está disponível em [`coworking.db`](coworking.db).
+O script completo de criação do banco está disponível em [`banco.sql`](banco.sql).
 
 ---
 
@@ -140,7 +140,7 @@ sistema_coworking_flutter/
 │   ├── salas.png
 │   └── agendamentos.png
 │
-├── coworking.db
+├── banco.sql
 └── README.md
 ```
 
