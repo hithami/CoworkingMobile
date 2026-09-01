@@ -209,6 +209,22 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 }
               },
               child: Text('Criar Agendamento'),
+            ), 
+             
+            SizedBox(height: 30), 
+             
+            Expanded(
+              child: ListView.builder(
+                itemCount: _agendamentos.length,
+                itemBuilder: (context, index) {
+                  final agendamento = _agendamentos[index];
+
+                  return ListTile(
+                    title: Text(agendamento.nomeSala ?? ''),
+                    subtitle: Text('${agendamento.dataHoraInicio} até ${agendamento.dataHoraFim}'),
+                  );
+                },
+              ),
             ),
           ],
         ),
