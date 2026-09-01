@@ -140,7 +140,7 @@ sistema_coworking_flutter/
 │   ├── salas.png
 │   └── agendamentos.png
 │
-├── banco.sql
+├── coworking.db
 └── README.md
 ```
 
