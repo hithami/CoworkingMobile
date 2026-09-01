@@ -221,8 +221,55 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
 
                   return ListTile(
                     title: Text(agendamento.nomeSala ?? ''),
-                    subtitle: Text('${agendamento.dataHoraInicio} até ${agendamento.dataHoraFim}'),
-                  );
+                    subtitle: Text('${agendamento.dataHoraInicio} até ${agendamento.dataHoraFim}'), 
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Confirmação'),
+                              content: Text('Tem certeza que deseja excluir este agendamento?'),
+                              actions: [ 
+
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+
+                                    try {
+                                      await _agendamentoRepository.excluirAgendamento(agendamento.idAgendamento!);
+                                      await _carregarAgendamentos();
+
+                                      if (!context.mounted) return;
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Agendamento excluído com sucesso!')),
+                                      );
+                                    } catch (erro) {
+                                      if (!context.mounted) return;
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Erro ao excluir agendamento.')),
+                                      );
+                                    }
+                                  },
+                                  child: Text('Sim'),
+                                ), 
+                                 
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Não'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ); 
                 },
               ),
             ),
